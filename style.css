@@ -1,6 +1,6 @@
  @font-face {
-    font-family: 'asd'; /* 내가 부르고 싶은 이름 설정 */
-    src: url('./TTF/dnfd.ttf') format('truetype'); /* 파일 경로와 형식 */
+    font-family: 'asd'; 
+    src: url('./TTF/dnfd.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -86,4 +86,11 @@
     font-size: 10px;
      color: #BDBDBD;
      padding-left: 10px;
+     text-align: center;
+ }
+ .nameli{
+    font-size: 13px;
+     color: #BDBDBD;
+     padding-left: 10px;
+     text-align: center;
  }

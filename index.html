@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoL Boom 팀 포인트 정산기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div>
+<div class="container">
+    <h2>LOL BOOM 내전 팀 밸런스 </h2>
+    <table>
+        <thead>
+            <tr>
+                <th>포지션</th>
+                <th>1팀</th>
+                <th>점수</th>
+                <th>2팀</th>
+                <th>점수</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="pos-cell">TOP</td>
+                <td><input type="text" placeholder="이름"></td>
+                <td id="pt"><input type="number" class="t1-pt"  oninput="calcSum()"></td>
+                <td><input type="text" placeholder="이름"></td>
+                <td id="pt"><input type="number" class="t2-pt"  oninput="calcSum()"></td>
+            </tr>
+            <tr>
+                <td class="pos-cell">JG</td>
+                <td><input type="text" placeholder="이름"></td>
+                <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
+                <td><input type="text" placeholder="이름"></td>
+                <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
+            </tr>
+            <tr>
+                <td class="pos-cell">MID</td>
+                <td><input type="text" placeholder="이름"></td>
+                <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
+                <td><input type="text" placeholder="이름"></td>
+                <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
+            </tr>
+            <tr>
+                <td class="pos-cell">ADC</td>
+                <td><input type="text" placeholder="이름"></td>
+                <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
+                <td><input type="text" placeholder="이름"></td>
+                <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
+            </tr>
+            <tr>
+                <td class="pos-cell">SUP</td>
+                <td><input type="text" placeholder="이름"></td>
+                <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
+                <td><input type="text" placeholder="이름"></td>
+                <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="sum-row">
+                <td >총 합</td>
+                <td>1팀</td>
+                <td id="t1-total" class="sum-val">0</td>
+                <td>2팀</td>
+                <td id="t2-total" class="sum-val">0</td>
+            </tr>
+        </tfoot>
+        
+    </table>
+    
+</div>
+<div class="nameii">made by seungjin</div>
+</div>
+<script>
+    // 1. 합계 계산 함수 (기존과 동일)
+    function calcSum() {
+        const t1Inputs = document.querySelectorAll('.t1-pt');
+        let t1Sum = 0;
+        t1Inputs.forEach(input => {
+            t1Sum += parseInt(input.value) || 0;
+        });
+        document.getElementById('t1-total').innerText = t1Sum;
+
+        const t2Inputs = document.querySelectorAll('.t2-pt');
+        let t2Sum = 0;
+        t2Inputs.forEach(input => {
+            t2Sum += parseInt(input.value) || 0;
+        });
+        document.getElementById('t2-total').innerText = t2Sum;
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.target.tagName !== 'INPUT') return;
+
+        const input = e.target;
+        const td = input.parentElement;
+        const tr = td.parentElement;
+        const colIndex = td.cellIndex;
+
+        if (e.key === 'ArrowDown') {
+            const nextRow = tr.nextElementSibling;
+            if (nextRow && nextRow.cells[colIndex]) {
+                const nextInput = nextRow.cells[colIndex].querySelector('input');
+                if (nextInput) { e.preventDefault(); nextInput.focus(); }
+            }
+        } 
+       
+        else if (e.key === 'ArrowUp') {
+            const prevRow = tr.previousElementSibling;
+            if (prevRow && prevRow.parentElement.tagName === 'TBODY' && prevRow.cells[colIndex]) {
+                const prevInput = prevRow.cells[colIndex].querySelector('input');
+                if (prevInput) { e.preventDefault(); prevInput.focus(); }
+            }
+        } 
+     
+        else if (e.key === 'ArrowRight') {
+        
+            let nextTd = td.nextElementSibling;
+          
+            while (nextTd) {
+                const nextInput = nextTd.querySelector('input');
+                if (nextInput) {
+                    nextInput.focus();
+                    break;
+                }
+                nextTd = nextTd.nextElementSibling;
+            }
+        } 
+   
+        else if (e.key === 'ArrowLeft') {
+       
+            let prevTd = td.previousElementSibling;
+            while (prevTd) {
+                const prevInput = prevTd.querySelector('input');
+                if (prevInput) {
+                    prevInput.focus();
+                    break;
+                }
+                prevTd = prevTd.previousElementSibling;
+            }
+        }
+    });
+</script>
+</body>
+</html>

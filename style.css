@@ -1,0 +1,89 @@
+ @font-face {
+    font-family: 'asd'; /* 내가 부르고 싶은 이름 설정 */
+    src: url('./TTF/dnfd.ttf') format('truetype'); /* 파일 경로와 형식 */
+    font-weight: normal;
+    font-style: normal;
+}
+ body {
+     font-family: 'Malgun Gothic', sans-serif;
+     background-color: #1a1a1a;
+     color: white;
+     display: flex;
+     justify-content: center;
+     padding: 40px;
+     font-family: 'MyCustomFont', sans-serif;
+     
+ }
+
+ .container {
+     background-color: #2d2d2d;
+     padding: 20px;
+     border-radius: 12px;
+     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+     
+ }
+
+ h2 {
+     text-align: center;
+     color: white;
+     margin-top: 20px;
+     font-size: 30px;
+ }
+
+ table {
+     border-collapse: collapse;
+     width: 100%;
+ }
+
+ th,
+ td {
+     padding: 12px;
+     border: 1px solid #444;
+     text-align: center;
+ }
+
+ th {
+     background-color: #3d3d3d;
+     color: #c8aa6e;
+ }
+.t1-pt, .t2-pt {
+    width: 50px;      
+    padding: 8px 5px;  
+    text-align: center; 
+}
+ input {
+     background: #1a1a1a;
+     border: 1px solid #555;
+     color: white;
+     padding: 8px;
+     width: 90px;
+     text-align: center;
+     border-radius: 4px;
+ }
+
+ input:focus {
+     border-color: #c8aa6e;
+     outline: none;
+ }
+
+ .pos-cell {
+     font-weight: bold;
+     background-color: #333;
+     color: #BDBDBD;
+ }
+
+ .sum-row {
+     background-color: #3d3d3d;
+     font-weight: bold;
+     font-size: 1.1em;
+     color: #c8aa6e;
+ }
+
+ .sum-val {
+     color: #f0e6d2;
+ }
+ .nameii{
+    font-size: 10px;
+     color: #BDBDBD;
+     padding-left: 10px;
+ }

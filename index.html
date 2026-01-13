@@ -8,9 +8,8 @@
 </head>
 <body>
 <div>
-<div class="nameli">팀 완성 시에 내전팀 확인방에 캡처후 업로드(win+shift+s)</div>
 <div class="container">
-    <h2>LOL BOOM 내전 팀 밸런스 </h2>
+    <h2>[ LOL BOOM 내전 팀 밸런스 ] </h2>
     <table>
         <thead>
             <tr>
@@ -19,48 +18,48 @@
                 <th>점수</th>
                 <th>2팀</th>
                 <th>점수</th>
-                <th>기능</th>
+                <th>스왑</th>
             </tr>
         </thead>
         <tbody>
            <tr>
         <td class="pos-cell">TOP</td>
         <td><input type="text" class="t1-name" placeholder="이름"></td>
-        <td><input type="number" class="t1-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
         <td><input type="text" class="t2-name" placeholder="이름"></td>
-        <td><input type="number" class="t2-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="number" class="t2-pt" oninput="calcSum()"></td>
         <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
     </tr>
             <tr>
                 <td class="pos-cell">JG</td>
                 <td><input type="text" class="t1-name" placeholder="이름"></td>
-        <td><input type="number" class="t1-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
         <td><input type="text" class="t2-name" placeholder="이름"></td>
-        <td><input type="number" class="t2-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
         <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
             </tr>
             <tr>
                 <td class="pos-cell">MID</td>
                <td><input type="text" class="t1-name" placeholder="이름"></td>
-        <td><input type="number" class="t1-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
         <td><input type="text" class="t2-name" placeholder="이름"></td>
-        <td><input type="number" class="t2-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
         <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
             </tr>
             <tr>
                 <td class="pos-cell">ADC</td>
                <td><input type="text" class="t1-name" placeholder="이름"></td>
-        <td><input type="number" class="t1-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
         <td><input type="text" class="t2-name" placeholder="이름"></td>
-        <td><input type="number" class="t2-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
         <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
             </tr>
             <tr>
                 <td class="pos-cell">SUP</td>
                 <td><input type="text" class="t1-name" placeholder="이름"></td>
-        <td><input type="number" class="t1-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
         <td><input type="text" class="t2-name" placeholder="이름"></td>
-        <td><input type="number" class="t2-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
         <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
             </tr>
         </tbody>
@@ -196,7 +195,7 @@ function copyResults() {
         alert("복사되었습니다!");
     }).catch(err => {
         console.error('복사 실패:', err);
-        alert("복사에 실패했습니다. 다시 시도해 주세요.");
+        alert("복사 실패");
     });
 }
 </script>

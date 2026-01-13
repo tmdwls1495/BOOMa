@@ -1,6 +1,6 @@
  @font-face {
     font-family: 'asd'; 
-    src: url('./TTF/dnfd.ttf') format('truetype');
+    src: url('/TTF/dnfd.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -11,7 +11,7 @@
      display: flex;
      justify-content: center;
      padding: 40px;
-     font-family: 'MyCustomFont', sans-serif;
+     font-family: 'asd', sans-serif;
      
  }
 
@@ -40,6 +40,7 @@
      padding: 12px;
      border: 1px solid #444;
      text-align: center;
+     
  }
 
  th {
@@ -59,6 +60,7 @@
      width: 90px;
      text-align: center;
      border-radius: 4px;
+     font-family: 'asd', sans-serif;
  }
 
  input:focus {
@@ -81,6 +83,7 @@
 
  .sum-val {
      color: #f0e6d2;
+     font-family: 'asd', sans-serif;
  }
  .nameii{
     font-size: 10px;
@@ -111,4 +114,8 @@
 
 th:nth-child(4), td:nth-child(4) {
     width: 50px;
+    
+}
+button{
+    font-family: 'asd', sans-serif;
 }

@@ -94,3 +94,21 @@
      padding-left: 10px;
      text-align: center;
  }
+ .copy-btn, .swap-btn {
+    background-color: #3d3d3d;
+    color: #c8aa6e;
+    border: 1px solid #c8aa6e;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.swap-btn:hover {
+    background-color: #c8aa6e;
+    color: #1a1a1a;
+}
+
+th:nth-child(4), td:nth-child(4) {
+    width: 50px;
+}

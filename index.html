@@ -19,43 +19,49 @@
                 <th>점수</th>
                 <th>2팀</th>
                 <th>점수</th>
+                <th>기능</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td class="pos-cell">TOP</td>
-                <td><input type="text" placeholder="이름"></td>
-                <td id="pt"><input type="number" class="t1-pt"  oninput="calcSum()"></td>
-                <td><input type="text" placeholder="이름"></td>
-                <td id="pt"><input type="number" class="t2-pt"  oninput="calcSum()"></td>
-            </tr>
+           <tr>
+        <td class="pos-cell">TOP</td>
+        <td><input type="text" class="t1-name" placeholder="이름"></td>
+        <td><input type="number" class="t1-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="text" class="t2-name" placeholder="이름"></td>
+        <td><input type="number" class="t2-pt" value="0" oninput="calcSum()"></td>
+        <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
+    </tr>
             <tr>
                 <td class="pos-cell">JG</td>
-                <td><input type="text" placeholder="이름"></td>
-                <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
-                <td><input type="text" placeholder="이름"></td>
-                <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
+                <td><input type="text" class="t1-name" placeholder="이름"></td>
+        <td><input type="number" class="t1-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="text" class="t2-name" placeholder="이름"></td>
+        <td><input type="number" class="t2-pt" value="0" oninput="calcSum()"></td>
+        <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
             </tr>
             <tr>
                 <td class="pos-cell">MID</td>
-                <td><input type="text" placeholder="이름"></td>
-                <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
-                <td><input type="text" placeholder="이름"></td>
-                <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
+               <td><input type="text" class="t1-name" placeholder="이름"></td>
+        <td><input type="number" class="t1-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="text" class="t2-name" placeholder="이름"></td>
+        <td><input type="number" class="t2-pt" value="0" oninput="calcSum()"></td>
+        <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
             </tr>
             <tr>
                 <td class="pos-cell">ADC</td>
-                <td><input type="text" placeholder="이름"></td>
-                <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
-                <td><input type="text" placeholder="이름"></td>
-                <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
+               <td><input type="text" class="t1-name" placeholder="이름"></td>
+        <td><input type="number" class="t1-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="text" class="t2-name" placeholder="이름"></td>
+        <td><input type="number" class="t2-pt" value="0" oninput="calcSum()"></td>
+        <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
             </tr>
             <tr>
                 <td class="pos-cell">SUP</td>
-                <td><input type="text" placeholder="이름"></td>
-                <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
-                <td><input type="text" placeholder="이름"></td>
-                <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
+                <td><input type="text" class="t1-name" placeholder="이름"></td>
+        <td><input type="number" class="t1-pt" value="0" oninput="calcSum()"></td>
+        <td><input type="text" class="t2-name" placeholder="이름"></td>
+        <td><input type="number" class="t2-pt" value="0" oninput="calcSum()"></td>
+        <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
             </tr>
         </tbody>
         <tfoot>
@@ -65,6 +71,10 @@
                 <td id="t1-total" class="sum-val">0</td>
                 <td>2팀</td>
                 <td id="t2-total" class="sum-val">0</td>
+                 <td><button type="button" class="copy-btn" onclick="copyResults()">복사</button>
+</div></td>
+                <div class="button-area">
+                    
             </tr>
         </tfoot>
         
@@ -143,6 +153,52 @@
             }
         }
     });
+    function swapRow(btn) {
+   
+    const tr = btn.parentElement.parentElement;
+
+    const t1Name = tr.querySelector('.t1-name');
+    const t1Pt = tr.querySelector('.t1-pt');
+    const t2Name = tr.querySelector('.t2-name');
+    const t2Pt = tr.querySelector('.t2-pt');
+
+    const tempName = t1Name.value;
+    t1Name.value = t2Name.value;
+    t2Name.value = tempName;
+
+    const tempPt = t1Pt.value;
+    t1Pt.value = t2Pt.value;
+    t2Pt.value = tempPt;
+
+    calcSum();
+}
+function copyResults() {
+    
+    const positions = ["탑 \t", "정글", "미드", "원딜", "서폿"];
+    let textResult = "[ 내전 팀 밸런스 ]\n\n";
+
+    const rows = document.querySelectorAll("tbody tr");
+    
+    rows.forEach((row, index) => {
+        const pos = positions[index];
+        const t1Name = row.querySelector('.t1-name').value || "미정";
+        const t1Pt = row.querySelector('.t1-pt').value || "0";
+        const t2Name = row.querySelector('.t2-name').value || "미정";
+        const t2Pt = row.querySelector('.t2-pt').value || "0";
+
+        textResult += `${pos}\t${t1Name}(${t1Pt})\t${t2Name}(${t2Pt})\n`;
+    });
+    const t1Total = document.getElementById('t1-total').innerText;
+    const t2Total = document.getElementById('t2-total').innerText;
+    textResult += `\n[총 합]\t\t\t${t1Total}\t:\t${t2Total}`;
+
+    navigator.clipboard.writeText(textResult).then(() => {
+        alert("복사되었습니다!");
+    }).catch(err => {
+        console.error('복사 실패:', err);
+        alert("복사에 실패했습니다. 다시 시도해 주세요.");
+    });
+}
 </script>
 </body>
 </html>

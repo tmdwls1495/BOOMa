@@ -1,203 +1,1304 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoL Boom 팀 포인트 정산기</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOL BOOM 2026</title>
+
+<style>
+@font-face{
+    font-family:'asd';
+    src:url('./TTF/dnfd.ttf') format('truetype');
+}
+
+#score1, #score2{
+    font-size: 50px;
+}
+.title123{
+    margin-left: 10px;
+}
+:root{
+    --bg-image:url('/00011.png');
+    --bg:#0b0e14;
+    --card:#171b24ee;
+    --row:#202632;
+    --gold:#D6B36A;
+    --gold2:#F4D89D;
+    --line:rgba(255,255,255,.08);
+
+    --blue:#2F6FFF;
+    --red:#D84C4C;
+
+    --text:#F3F4F6;
+    --sub:#9CA3AF;
+}
+
+*{box-sizing:border-box;}
+
+body{
+    margin:0;
+    padding:28px;
+    background:
+        var(--bg-image) center / cover no-repeat fixed,
+        radial-gradient(circle at top,#39270f 0%,transparent 35%),
+        linear-gradient(#0b0e14,#11151d);
+
+    color:var(--text);
+    font-family:'asd','Malgun Gothic',sans-serif;
+}
+
+.app{
+    max-width:1000px;
+    margin:auto;
+
+    background:var(--card);
+    backdrop-filter:blur(22px);
+
+    border-radius:28px;
+    border:1px solid rgba(255,255,255,.06);
+
+    padding:24px;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.55);
+}
+
+.name1,.name2{
+    font-size: 18px;
+}
+.pt1{
+    font-size:18px;
+}
+.pt2{
+    font-size:18px;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:var(--gold);
+    font-size:15px;
+    letter-spacing:5px;
+}
+
+h1{
+    margin:6px 0 0;
+    font-size:30px;
+}
+
+.match-select{
+    height:44px;
+    min-width:120px;
+
+    border:none;
+    border-radius:12px;
+
+    background:#10141B;
+    color:var(--gold);
+
+    text-align:center;
+    font-size:15px;
+    font-family:inherit;
+
+    padding:0 14px;
+}
+
+.import-box{
+    margin-top:18px;
+}
+
+.import-box textarea{
+    width:100%;
+    height:130px;
+
+    resize:vertical;
+
+    background:#10141B;
+    color:white;
+
+    border:1px solid var(--line);
+    border-radius:12px;
+
+    padding:12px;
+
+    font-family:inherit;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.auto-btn{
+    height:44px;
+    padding:0 18px;
+    background:#2D3748;
+    color:white;
+    white-space:nowrap;
+}
+
+.score{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+
+    gap:14px;
+    margin:22px 0;
+}
+
+.team{
+    padding:16px;
+    border-radius:18px;
+    text-align:center;
+    transition:.25s;
+}
+
+.team small{
+    color:#D1D5DB;
+}
+
+.team h2{
+    margin:6px 0 0;
+    font-size:42px;
+}
+
+.blue{
+    background:linear-gradient(135deg,#18345C,#2557B0);
+}
+
+.red{
+    background:linear-gradient(135deg,#4A1F1F,#9C3434);
+}
+
+.vs{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:var(--gold);
+    font-size:20px;
+}
+
+.row{
+    display:grid;
+    grid-template-columns:16% minmax(0,1fr);
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.lane{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:var(--row);
+    border:1px solid var(--line);
+    border-radius:16px;
+
+    font-size:18px;
+    font-weight:bold;
+
+    color:var(--gold2);
+}
+
+.slots{
+    display:grid;
+    grid-template-columns:
+        minmax(0,26fr)
+        minmax(0,11fr)
+        minmax(0,10fr)
+        minmax(0,26fr)
+        minmax(0,11fr);
+
+    gap:6px;
+    align-items:center;
+
+    background:var(--row);
+    border:1px solid var(--line);
+    border-radius:16px;
+
+    padding:8px 6px;
+}
+
+input{
+    width:100%;
+    height:42px;
+
+    border:none;
+    border-radius:10px;
+
+    background:#10141B;
+    color:white;
+
+    padding:0 10px;
+
+    font-family:inherit;
+
+    transition:box-shadow .4s;
+}
+
+input{
+    min-width:0;
+}
+
+.slots input{
+    text-align:center;
+    padding:0 6px;
+}
+
+input[type=number]{
+    -moz-appearance:textfield;
+    appearance:textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance:none;
+    margin:0;
+}
+
+input:focus{
+    outline:none;
+    box-shadow:0 0 0 2px rgba(214,179,106,.35);
+}
+
+input.offlane{
+    box-shadow:0 0 0 2px rgba(216,76,76,.8);
+}
+
+button{
+    height:42px;
+
+    border:none;
+    border-radius:12px;
+
+    font-family:inherit;
+    font-size:14px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.18s;
+}
+
+button:hover{
+    transform:translateY(-1px);
+}
+
+.swap button{
+    width:100%;
+    background:#303846;
+    color:white;
+}
+
+.actions{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+
+    gap:12px;
+    margin-top:18px;
+}
+
+#copyAll{
+    background:#303846;
+    color:white;
+}
+
+#win1{
+    background:#2F6FFF;
+    color:white;
+}
+
+#win2{
+    background:#D84C4C;
+    color:white;
+}
+
+.credit{
+    text-align:center;
+    margin-top:14px;
+
+    color:#6B7280;
+    font-size:12px;
+}
+
+.toast{
+    position:fixed;
+
+    left:50%;
+    bottom:25px;
+
+    transform:translateX(-50%) translateY(20px);
+
+    max-width:90vw;
+    text-align:center;
+
+    background:#1A1F28;
+    color:white;
+
+    border:1px solid rgba(214,179,106,.35);
+
+    border-radius:24px;
+
+    padding:12px 18px;
+
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%);
+}
+@media (max-width:520px){
+    body{padding:12px;}
+    .app{padding:16px;}
+    .slots{padding:6px 4px;gap:4px;}
+    .row{gap:6px;}
+    .lane{font-size:14px;}
+    h1{font-size:24px;}
+}
+</style>
 </head>
+
 <body>
-<div>
-<div class="container">
-    <h2>[ LOL BOOM 내전 팀 밸런스 ] </h2>
-    <table>
-        <thead>
-            <tr>
-                <th>포지션</th>
-                <th>1팀</th>
-                <th>점수</th>
-                <th>2팀</th>
-                <th>점수</th>
-                <th>스왑</th>
-            </tr>
-        </thead>
-        <tbody>
-           <tr>
-        <td class="pos-cell">TOP</td>
-        <td><input type="text" class="t1-name" placeholder="이름"></td>
-        <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
-        <td><input type="text" class="t2-name" placeholder="이름"></td>
-        <td><input type="number" class="t2-pt" oninput="calcSum()"></td>
-        <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
-    </tr>
-            <tr>
-                <td class="pos-cell">JG</td>
-                <td><input type="text" class="t1-name" placeholder="이름"></td>
-        <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
-        <td><input type="text" class="t2-name" placeholder="이름"></td>
-        <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
-        <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
-            </tr>
-            <tr>
-                <td class="pos-cell">MID</td>
-               <td><input type="text" class="t1-name" placeholder="이름"></td>
-        <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
-        <td><input type="text" class="t2-name" placeholder="이름"></td>
-        <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
-        <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
-            </tr>
-            <tr>
-                <td class="pos-cell">ADC</td>
-               <td><input type="text" class="t1-name" placeholder="이름"></td>
-        <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
-        <td><input type="text" class="t2-name" placeholder="이름"></td>
-        <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
-        <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
-            </tr>
-            <tr>
-                <td class="pos-cell">SUP</td>
-                <td><input type="text" class="t1-name" placeholder="이름"></td>
-        <td><input type="number" class="t1-pt"  oninput="calcSum()"></td>
-        <td><input type="text" class="t2-name" placeholder="이름"></td>
-        <td><input type="number" class="t2-pt"  oninput="calcSum()"></td>
-        <td><button type="button" class="swap-btn" onclick="swapRow(this)">⇄</button></td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr class="sum-row">
-                <td >총 합</td>
-                <td>1팀</td>
-                <td id="t1-total" class="sum-val">0</td>
-                <td>2팀</td>
-                <td id="t2-total" class="sum-val">0</td>
-                 <td><button type="button" class="copy-btn" onclick="copyResults()">복사</button>
-</div></td>
-                <div class="button-area">
-                    
-            </tr>
-        </tfoot>
-        
-    </table>
-    
+
+<div class="app">
+
+<div class="header">
+
+<div class="title123">
+<div class="logo">LOL BOOM</div>
+<h1>내전 팀 밸런스</h1>
 </div>
-<div class="nameii">made by seungjin</div>
+
+<div class="header-right">
+
+<button id="autoBtn" class="auto-btn">자동 배치</button>
+
+<select id="match" class="match-select">
+<option>1 경기</option>
+<option>2 경기</option>
+<option>3 경기</option>
+<option>4 경기</option>
+<option>5 경기</option>
+<option>6 경기</option>
+<option>7 경기</option>
+<option>8 경기</option>
+<option>9 경기</option>
+</select>
 
 </div>
+
+</div>
+
+<div class="import-box">
+
+<textarea id="paste" placeholder="카카오톡 구인글 붙여넣기 후 자동 배치 버튼 클릭."></textarea>
+
+</div>
+
+<div class="score">
+
+<div id="blueCard" class="team blue">
+<small>BLUE TEAM</small>
+<h2 id="score1">0</h2>
+</div>
+
+<div class="vs">VS</div>
+
+<div id="redCard" class="team red">
+<small>RED TEAM</small>
+<h2 id="score2">0</h2>
+</div>
+
+</div>
+<div id="tableBody">
+
+<div class="row">
+<div class="lane">TOP</div>
+<div class="slots">
+<input class="name1">
+<input type="number" class="pt1">
+<div class="swap"><button>⇄</button></div>
+<input class="name2">
+<input type="number" class="pt2">
+</div>
+</div>
+
+<div class="row">
+<div class="lane">JG</div>
+<div class="slots">
+<input class="name1">
+<input type="number" class="pt1">
+<div class="swap"><button>⇄</button></div>
+<input class="name2">
+<input type="number" class="pt2">
+</div>
+</div>
+
+<div class="row">
+<div class="lane">MID</div>
+<div class="slots">
+<input class="name1">
+<input type="number" class="pt1">
+<div class="swap"><button>⇄</button></div>
+<input class="name2">
+<input type="number" class="pt2">
+</div>
+</div>
+
+<div class="row">
+<div class="lane">ADC</div>
+<div class="slots">
+<input class="name1">
+<input type="number" class="pt1">
+<div class="swap"><button>⇄</button></div>
+<input class="name2">
+<input type="number" class="pt2">
+</div>
+</div>
+
+<div class="row">
+<div class="lane">SUP</div>
+<div class="slots">
+<input class="name1">
+<input type="number" class="pt1">
+<div class="swap"><button>⇄</button></div>
+<input class="name2">
+<input type="number" class="pt2">
+</div>
+</div>
+
+</div>
+
+<div class="actions">
+<button id="copyAll">전체 복사</button>
+<button id="win1">1팀 승리</button>
+<button id="win2">2팀 승리</button>
+</div>
+
+<div class="credit">
+made by seungjin · 2026 Edition
+</div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
 <script>
-    
-    function calcSum() {
-        const t1Inputs = document.querySelectorAll('.t1-pt');
-        let t1Sum = 0;
-        t1Inputs.forEach(input => {
-            t1Sum += parseInt(input.value) || 0;
-        });
-        document.getElementById('t1-total').innerText = t1Sum;
+const lanes = ["TOP", "JG", "MID", "ADC", "SUP"];
+const laneMap = {
+    t: "TOP",
+    j: "JG",
+    m: "MID",
+    a: "ADC",
+    s: "SUP"
+};
 
-        const t2Inputs = document.querySelectorAll('.t2-pt');
-        let t2Sum = 0;
-        t2Inputs.forEach(input => {
-            t2Sum += parseInt(input.value) || 0;
+const laneLabel = {
+    TOP: "탑    ",
+    JG: "정글 ",
+    MID: "미드 ",
+    ADC: "원딜 ",
+    SUP: "서폿 "
+};
+
+const STORAGE_KEY = "lolboom_2026_matches";
+
+let matchData = {};
+let currentMatch = 1;
+let offlaneTimer = null;
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    loadAllData();
+
+    currentMatch = Number(
+        document.getElementById("match").value.replace("경기", "")
+    );
+
+    loadMatch(currentMatch);
+
+    setupEvents();
+
+    calculateScore();
+
+});
+
+
+function setupEvents() {
+
+    const match = document.getElementById("match");
+    const autoBtn = document.getElementById("autoBtn");
+    const copyAll = document.getElementById("copyAll");
+    const win1 = document.getElementById("win1");
+    const win2 = document.getElementById("win2");
+
+    match.addEventListener("change", () => {
+
+        saveMatch(currentMatch);
+
+        currentMatch = Number(
+            match.value.replace("경기", "")
+        );
+
+        loadMatch(currentMatch);
+
+    });
+
+
+    autoBtn.addEventListener("click", autoBalance);
+
+
+    copyAll.addEventListener("click", copyAllTeams);
+
+
+    win1.addEventListener("click", () => {
+
+        setWinner(1);
+
+    });
+
+
+    win2.addEventListener("click", () => {
+
+        setWinner(2);
+
+    });
+
+
+    document.querySelectorAll("input").forEach(input => {
+
+        input.addEventListener("input", () => {
+
+            calculateScore();
+
+            saveMatch(currentMatch);
+
         });
-        document.getElementById('t2-total').innerText = t2Sum;
+
+    });
+
+
+    document.querySelectorAll(".swap button").forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const row = button.closest(".row");
+
+            swapRow(row);
+
+        });
+
+    });
+
+
+    setupKeyboardNavigation();
+
+}
+
+
+function saveAllData() {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(matchData)
+    );
+
+}
+
+
+function loadAllData() {
+
+    try {
+
+        const saved = localStorage.getItem(STORAGE_KEY);
+
+        if (saved) {
+
+            matchData = JSON.parse(saved);
+
+        } else {
+
+            matchData = {};
+
+        }
+
+    } catch (e) {
+
+        console.error(e);
+
+        matchData = {};
+
     }
 
-    document.addEventListener('keydown', function(e) {
-        if (e.target.tagName !== 'INPUT') return;
-
-        const input = e.target;
-        const td = input.parentElement;
-        const tr = td.parentElement;
-        const colIndex = td.cellIndex;
-
-        if (e.key === 'ArrowDown') {
-            const nextRow = tr.nextElementSibling;
-            if (nextRow && nextRow.cells[colIndex]) {
-                const nextInput = nextRow.cells[colIndex].querySelector('input');
-                if (nextInput) { e.preventDefault(); nextInput.focus(); }
-            }
-        } 
-       
-        else if (e.key === 'ArrowUp') {
-            const prevRow = tr.previousElementSibling;
-            if (prevRow && prevRow.parentElement.tagName === 'TBODY' && prevRow.cells[colIndex]) {
-                const prevInput = prevRow.cells[colIndex].querySelector('input');
-                if (prevInput) { e.preventDefault(); prevInput.focus(); }
-            }
-        } 
-     
-        else if (e.key === 'ArrowRight') {
-        
-            let nextTd = td.nextElementSibling;
-          
-            while (nextTd) {
-                const nextInput = nextTd.querySelector('input');
-                if (nextInput) {
-                    nextInput.focus();
-                    break;
-                }
-                nextTd = nextTd.nextElementSibling;
-            }
-        } 
-   
-        else if (e.key === 'ArrowLeft') {
-       
-            let prevTd = td.previousElementSibling;
-            while (prevTd) {
-                const prevInput = prevTd.querySelector('input');
-                if (prevInput) {
-                    prevInput.focus();
-                    break;
-                }
-                prevTd = prevTd.previousElementSibling;
-            }
-        }
-    });
-    function swapRow(btn) {
-   
-    const tr = btn.parentElement.parentElement;
-
-    const t1Name = tr.querySelector('.t1-name');
-    const t1Pt = tr.querySelector('.t1-pt');
-    const t2Name = tr.querySelector('.t2-name');
-    const t2Pt = tr.querySelector('.t2-pt');
-
-    const tempName = t1Name.value;
-    t1Name.value = t2Name.value;
-    t2Name.value = tempName;
-
-    const tempPt = t1Pt.value;
-    t1Pt.value = t2Pt.value;
-    t2Pt.value = tempPt;
-
-    calcSum();
 }
-function copyResults() {
-    
-    const positions = ["탑 \t", "정글", "미드", "원딜", "서폿"];
-    let textResult = "[ 내전 팀 밸런스 ]\n\n";
 
-    const rows = document.querySelectorAll("tbody tr");
-    
+
+function saveMatch(matchNumber) {
+
+    const rows = document.querySelectorAll("#tableBody .row");
+
+    const data = {
+        teams: []
+    };
+
+
+    rows.forEach(row => {
+
+        const name1 = row.querySelector("input.name1").value;
+        const pt1 = row.querySelector("input.pt1").value;
+
+        const name2 = row.querySelector("input.name2").value;
+        const pt2 = row.querySelector("input.pt2").value;
+
+        data.teams.push({
+            name1,
+            pt1,
+            name2,
+            pt2
+        });
+
+    });
+
+
+    matchData[matchNumber] = data;
+
+    saveAllData();
+
+}
+
+
+function loadMatch(matchNumber) {
+
+    document.querySelectorAll(".offlane").forEach(e => e.classList.remove("offlane"));
+    document.querySelectorAll("#tableBody input.name1, #tableBody input.name2").forEach(e => e.title = "");
+
+    const rows = document.querySelectorAll("#tableBody .row");
+
+    const data = matchData[matchNumber];
+
+
     rows.forEach((row, index) => {
-        const pos = positions[index];
-        const t1Name = row.querySelector('.t1-name').value || "미정";
-        const t1Pt = row.querySelector('.t1-pt').value || "0";
-        const t2Name = row.querySelector('.t2-name').value || "미정";
-        const t2Pt = row.querySelector('.t2-pt').value || "0";
 
-        textResult += `${pos}\t${t1Name}(${t1Pt})\t${t2Name}(${t2Pt})\n`;
-    });
-    const t1Total = document.getElementById('t1-total').innerText;
-    const t2Total = document.getElementById('t2-total').innerText;
-    textResult += `\n[총 합]\t\t\t${t1Total}\t:\t${t2Total}`;
+        const name1 = row.querySelector("input.name1");
+        const pt1 = row.querySelector("input.pt1");
 
-    navigator.clipboard.writeText(textResult).then(() => {
-        alert("복사되었습니다!");
-    }).catch(err => {
-        console.error('복사 실패:', err);
-        alert("복사 실패");
+        const name2 = row.querySelector("input.name2");
+        const pt2 = row.querySelector("input.pt2");
+
+
+        if (data && data.teams && data.teams[index]) {
+
+            name1.value = data.teams[index].name1 || "";
+            pt1.value = data.teams[index].pt1 || "";
+
+            name2.value = data.teams[index].name2 || "";
+            pt2.value = data.teams[index].pt2 || "";
+
+        } else {
+
+            name1.value = "";
+            pt1.value = "";
+
+            name2.value = "";
+            pt2.value = "";
+
+        }
+
     });
+
+
+    calculateScore();
+
 }
+
+
+function calculateScore() {
+
+    let score1 = 0;
+    let score2 = 0;
+
+
+    document.querySelectorAll(".pt1").forEach(input => {
+
+        const value = Number(input.value);
+
+        if (!isNaN(value)) {
+
+            score1 += value;
+
+        }
+
+    });
+
+
+    document.querySelectorAll(".pt2").forEach(input => {
+
+        const value = Number(input.value);
+
+        if (!isNaN(value)) {
+
+            score2 += value;
+
+        }
+
+    });
+
+
+    document.getElementById("score1").textContent = score1;
+    document.getElementById("score2").textContent = score2;
+
+}
+
+
+function setWinner(team) {
+
+    const rows = document.querySelectorAll("#tableBody .row");
+
+    const lines = [];
+
+    rows.forEach((row, index) => {
+
+        const name = row.querySelector(
+            team === 1 ? "input.name1" : "input.name2"
+        ).value.trim();
+
+        if (name) {
+
+            lines.push(`${laneLabel[lanes[index]]}${name}`);
+
+        }
+
+    });
+
+
+    if (lines.length === 0) {
+
+        showToast(`${team}팀에 등록된 인원이 없습니다.`);
+
+        return;
+
+    }
+
+
+    const now = new Date();
+
+    const dateText =
+        `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일`;
+
+
+    const output =
+        `${dateText}\n` +
+        `${currentMatch} 경기 결과\n` +
+        `\n` +
+        `[ ${team}팀 ] 승리\n` +
+        `\n` +
+        lines.join("\n");
+
+
+    copyText(output, `${team}팀 승리 명단이 복사되었습니다.`);
+
+}
+
+
+function swapRow(row) {
+
+    const name1 = row.querySelector("input.name1");
+    const pt1 = row.querySelector("input.pt1");
+
+    const name2 = row.querySelector("input.name2");
+    const pt2 = row.querySelector("input.pt2");
+
+
+    const tempName = name1.value;
+    const tempPt = pt1.value;
+
+
+    name1.value = name2.value;
+    pt1.value = pt2.value;
+
+    name2.value = tempName;
+    pt2.value = tempPt;
+
+
+    const off1 = name1.classList.contains("offlane");
+    const off2 = name2.classList.contains("offlane");
+    const title1 = name1.title;
+    const title2 = name2.title;
+
+    name1.classList.toggle("offlane", off2);
+    name2.classList.toggle("offlane", off1);
+
+    name1.title = title2;
+    name2.title = title1;
+
+
+    calculateScore();
+
+    saveMatch(currentMatch);
+
+}
+
+
+function parsePlayers(text) {
+
+    const main = text
+        .replace(/／/g, "/")
+        .split(/대기\s*인원/)[0];
+
+    const re = /^\s*(?:\d+\s*[.)]\s*)?([^\/\n]+?)\s*\/\s*([A-Za-z\s,]+?)\s*\/\s*(-?\d+(?:\.\d+)?)/;
+
+    const players = [];
+
+    main.split(/\r?\n/).forEach(line => {
+
+        const m = line.match(re);
+        if (!m) return;
+
+        const name = m[1].trim();
+        const raw = m[2].toLowerCase().replace(/[\s,]/g, "");
+        const point = Number(m[3]);
+
+        let positions = [];
+
+        if (raw.includes("all")) {
+
+            positions = [...lanes];
+
+        } else {
+
+            for (const ch of raw) {
+                if (laneMap[ch] && !positions.includes(laneMap[ch])) {
+                    positions.push(laneMap[ch]);
+                }
+            }
+
+        }
+
+        if (!name || positions.length === 0) return;
+
+        players.push({ name, point, positions, raw });
+
+    });
+
+    return players;
+
+}
+
+
+function autoBalance() {
+
+    const text = document.getElementById("paste").value.trim();
+
+    if (!text) {
+        showToast("신청글을 먼저 붙여넣어 주세요.");
+        return;
+    }
+
+    const players = parsePlayers(text);
+
+    if (players.length === 0) {
+        showToast("플레이어 정보를 찾지 못했습니다.");
+        return;
+    }
+
+    const result = solveTeams(players);
+
+    applyTeams(result.team1, result.team2);
+    calculateScore();
+    saveMatch(currentMatch);
+
+    let msg = `배치 완료 (점수차 ${result.diff})`;
+
+    if (players.length < 10) {
+        msg = `${players.length}명 배치 완료 (10명 미만)`;
+    } else if (players.length > 10) {
+        msg = `${players.length}명 중 앞 10명만 배치했습니다`;
+    }
+
+    const offs = [...result.team1, ...result.team2].filter(p => p.off);
+
+    if (offs.length > 0) {
+        msg += ` · 라인 불일치 ${offs.length}명: ` +
+            offs.map(p => `${p.name}→${p.lane}`).join(", ");
+    }
+
+    showToast(msg, offs.length > 0 ? 4500 : 2200);
+
+}
+
+
+function solveTeams(players) {
+
+    const list = players.slice(0, 10);
+
+    const order = [...list].sort(
+        (a, b) => a.positions.length - b.positions.length
+    );
+
+    const count = {};
+    lanes.forEach(l => count[l] = 0);
+
+    const current = new Array(order.length);
+
+    let bestCost = Infinity;
+    let candidates = [];
+    let seen = 0;
+    const MAX = 3000;
+
+    function dfs(i, cost) {
+
+        if (cost > bestCost) return;
+
+        if (i === order.length) {
+
+            if (cost < bestCost) {
+                bestCost = cost;
+                candidates = [];
+                seen = 0;
+            }
+
+            seen++;
+
+            if (candidates.length < MAX) {
+                candidates.push(current.slice());
+            } else {
+                const r = Math.floor(Math.random() * seen);
+                if (r < MAX) candidates[r] = current.slice();
+            }
+
+            return;
+
+        }
+
+        const p = order[i];
+
+        const tryLanes = [
+            ...p.positions,
+            ...lanes.filter(l => !p.positions.includes(l))
+        ];
+
+        for (const lane of tryLanes) {
+
+            if (count[lane] >= 2) continue;
+
+            const off = p.positions.includes(lane) ? 0 : 1;
+
+            count[lane]++;
+            current[i] = lane;
+
+            dfs(i + 1, cost + off);
+
+            count[lane]--;
+
+        }
+
+    }
+
+    dfs(0, 0);
+
+
+    let best = null;
+    let bestScore = Infinity;
+    let ties = 0;
+
+    for (const cand of candidates) {
+
+        const byLane = {};
+        lanes.forEach(l => byLane[l] = []);
+
+        cand.forEach((lane, i) => {
+            byLane[lane].push({
+                ...order[i],
+                lane,
+                off: !order[i].positions.includes(lane)
+            });
+        });
+
+        for (let mask = 0; mask < 32; mask++) {
+
+            const t1 = [];
+            const t2 = [];
+
+            lanes.forEach((lane, k) => {
+
+                const [a, b] = byLane[lane];
+                const swap = (mask >> k) & 1;
+
+                if (a) (swap ? t2 : t1).push(a);
+                if (b) (swap ? t1 : t2).push(b);
+
+            });
+
+            const s1 = t1.reduce((s, p) => s + p.point, 0);
+            const s2 = t2.reduce((s, p) => s + p.point, 0);
+
+            const diff = Math.abs(s1 - s2);
+            const score = diff + Math.abs(t1.length - t2.length) * 1000;
+
+            if (score < bestScore - 1e-9) {
+
+                bestScore = score;
+                ties = 1;
+                best = { team1: t1, team2: t2, diff };
+
+            } else if (Math.abs(score - bestScore) < 1e-9) {
+
+                ties++;
+
+                if (Math.random() < 1 / ties) {
+                    best = { team1: t1, team2: t2, diff };
+                }
+
+            }
+
+        }
+
+    }
+
+    return best;
+
+}
+
+
+function applyTeams(team1, team2) {
+
+    const rows = document.querySelectorAll("#tableBody .row");
+
+    rows.forEach((row, index) => {
+
+        const lane = lanes[index];
+
+        const p1 = team1.find(p => p.lane === lane);
+        const p2 = team2.find(p => p.lane === lane);
+
+        const name1 = row.querySelector("input.name1");
+        const pt1 = row.querySelector("input.pt1");
+        const name2 = row.querySelector("input.name2");
+        const pt2 = row.querySelector("input.pt2");
+
+        name1.value = p1 ? p1.name : "";
+        pt1.value = p1 ? p1.point : "";
+        name2.value = p2 ? p2.name : "";
+        pt2.value = p2 ? p2.point : "";
+
+        name1.classList.toggle("offlane", !!(p1 && p1.off));
+        name2.classList.toggle("offlane", !!(p2 && p2.off));
+
+        name1.title = p1 ? `희망: ${p1.raw}` : "";
+        name2.title = p2 ? `희망: ${p2.raw}` : "";
+
+    });
+
+
+    clearTimeout(offlaneTimer);
+
+    offlaneTimer = setTimeout(() => {
+
+        document.querySelectorAll(".offlane").forEach(e => {
+            e.classList.remove("offlane");
+        });
+
+    }, 3000);
+
+}
+
+
+function copyAllTeams() {
+
+    const rows = document.querySelectorAll("#tableBody .row");
+
+    const format = (name, pt) => {
+
+        name = name.trim();
+        pt = pt.trim();
+
+        if (!name) return "-";
+
+        return pt ? `${name}(${pt})` : name;
+
+    };
+
+
+    const lines = [];
+
+    rows.forEach((row, index) => {
+
+        const p1 = format(
+            row.querySelector("input.name1").value,
+            row.querySelector("input.pt1").value
+        );
+
+        const p2 = format(
+            row.querySelector("input.name2").value,
+            row.querySelector("input.pt2").value
+        );
+
+        lines.push(`${laneLabel[lanes[index]]}${p1} ${p2}`);
+
+    });
+
+
+    const score1 = document.getElementById("score1").textContent;
+    const score2 = document.getElementById("score2").textContent;
+
+
+    const output =
+        `[ ${currentMatch}경기 ]\n` +
+        `\n` +
+        lines.join("\n") + "\n" +
+        `\n` +
+        `[총 합] ${score1} : ${score2}`;
+
+
+    copyText(output, "전체 팀 정보가 복사되었습니다.");
+
+}
+
+
+async function copyText(text, message) {
+
+    try {
+
+        await navigator.clipboard.writeText(text);
+
+    } catch (error) {
+
+        const textarea = document.createElement("textarea");
+
+        textarea.value = text;
+
+        document.body.appendChild(textarea);
+
+        textarea.select();
+
+        document.execCommand("copy");
+
+        textarea.remove();
+
+    }
+
+    showToast(message);
+
+}
+
+
+function setupKeyboardNavigation() {
+
+    const inputs = Array.from(
+        document.querySelectorAll(
+            "#tableBody input"
+        )
+    );
+
+
+    inputs.forEach((input, index) => {
+
+        input.addEventListener("keydown", event => {
+
+            if (event.isComposing) return;
+
+
+            const start = input.selectionStart;
+            const end = input.selectionEnd;
+
+            const atStart = start === null || (start === 0 && end === 0);
+            const atEnd = end === null || end === input.value.length;
+
+
+            let nextIndex = null;
+
+
+            if (event.key === "Enter") {
+
+                nextIndex = index + 1;
+
+            } else if (event.key === "ArrowDown") {
+
+                nextIndex = index + 4;
+
+            } else if (event.key === "ArrowUp") {
+
+                nextIndex = index - 4;
+
+            } else if (event.key === "ArrowRight" && atEnd) {
+
+                nextIndex = index + 1;
+
+            } else if (event.key === "ArrowLeft" && atStart) {
+
+                nextIndex = index - 1;
+
+            }
+
+
+            if (nextIndex === null) return;
+
+
+            event.preventDefault();
+
+
+            if (
+                nextIndex >= 0 &&
+                nextIndex < inputs.length
+            ) {
+
+                inputs[nextIndex].focus();
+
+                inputs[nextIndex].select();
+
+            }
+
+        });
+
+    });
+
+}
+
+
+let toastTimer = null;
+
+
+function showToast(message, duration = 1800) {
+
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+    }, duration);
+
+}
+
+
+window.addEventListener("beforeunload", () => {
+
+    saveMatch(currentMatch);
+
+});
+
+
+document.getElementById("match").addEventListener(
+    "change",
+    () => {
+
+        calculateScore();
+
+    }
+);
+
 </script>
+
 </body>
 </html>

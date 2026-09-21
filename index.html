@@ -10,13 +10,13 @@
     font-family:'asd';
     src:url('./TTF/dnfd.ttf') format('truetype');
 }
-
 #score1, #score2{
     font-size: 50px;
 }
 .title123{
     margin-left: 10px;
 }
+
 :root{
     --bg-image:url('/00011.jpg');
     --bg:#0b0e14;
@@ -296,7 +296,11 @@ button:hover{
 
 .actions{
     display:grid;
-    grid-template-columns:1fr 1fr 1fr;
+    grid-template-columns:
+        minmax(0,30fr)
+        minmax(0,30fr)
+        minmax(0,30fr)
+        minmax(0,10fr);
 
     gap:12px;
     margin-top:18px;
@@ -315,6 +319,12 @@ button:hover{
 #win2{
     background:#D84C4C;
     color:white;
+}
+
+#clearAll{
+    background:#5A2E33;
+    color:white;
+    padding:0;
 }
 
 .credit{
@@ -360,6 +370,8 @@ button:hover{
     .slots{padding:6px 4px;gap:4px;}
     .row{gap:6px;}
     .lane{font-size:14px;}
+    .actions{gap:8px;}
+    .actions button{font-size:13px;}
     h1{font-size:24px;}
 }
 </style>
@@ -480,6 +492,7 @@ button:hover{
 <button id="copyAll">전체 복사</button>
 <button id="win1">1 팀 승리</button>
 <button id="win2">2 팀 승리</button>
+<button id="clearAll">삭제</button>
 </div>
 
 <div class="credit">
@@ -539,6 +552,7 @@ function setupEvents() {
     const copyAll = document.getElementById("copyAll");
     const win1 = document.getElementById("win1");
     const win2 = document.getElementById("win2");
+    const clearAll = document.getElementById("clearAll");
 
     match.addEventListener("change", () => {
 
@@ -571,6 +585,9 @@ function setupEvents() {
         setWinner(2);
 
     });
+
+
+    clearAll.addEventListener("click", clearMatch);
 
 
     document.querySelectorAll("input").forEach(input => {
@@ -804,6 +821,28 @@ function setWinner(team) {
 
 
     copyText(output, `${team}팀 승리 명단이 복사되었습니다.`);
+
+}
+
+
+function clearMatch() {
+
+    document.querySelectorAll("#tableBody input").forEach(input => {
+
+        input.value = "";
+        input.title = "";
+        input.classList.remove("offlane");
+
+    });
+
+
+    clearTimeout(offlaneTimer);
+
+    calculateScore();
+
+    saveMatch(currentMatch);
+
+    showToast(`${currentMatch}경기 입력 내용을 삭제했습니다.`);
 
 }
 
